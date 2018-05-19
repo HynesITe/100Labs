@@ -1,0 +1,5 @@
+﻿New-ADOrganizationalUnit -Name Corp -Path 'DC=CONTOSO,DC=COM'
+New-ADOrganizationalUnit -Name Users -Path 'OU=Corp,DC=CONTOSO,DC=COM'
+New-ADOrganizationalUnit -Name Groups -Path 'OU=Corp,DC=CONTOSO,DC=COM'
+New-ADOrganizationalUnit -Name Computers -Path 'OU=Corp,DC=CONTOSO,DC=COM'
+Import-Csv C:\Source\users.csv | foreach {New-AdUser -Name "$($_.DisplayName)" -SAMAccountName ($_.SAM) -UserPrincipalName ($_.SAM + "@contoso.com")  -DisplayName "$($_.DisplayName)" -GivenName "$($_.Fname)" -Surname "$($_.Lname)" -AccountPassword (ConvertTo-SecureString -AsPlainText "Passw0rd!" -Force)  -PasswordNeverExpires $true -Path 'OU=Users,OU=Corp,DC=Contoso,DC=com'}  
